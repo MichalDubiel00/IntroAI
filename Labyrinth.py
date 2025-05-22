@@ -115,6 +115,34 @@ def pathfind(grid, start, target):
 
     return []  # no path found
 
+def pathfind_step_by_step(grid, start, target):
+    open_set = [start]
+    closed_set = []
+    current = None
+
+    while open_set:
+        current = min(open_set, key=lambda n: (n.f_cost, n.h_cost))
+        open_set.remove(current)
+        closed_set.append(current)
+
+        if current is target:
+            yield retrace_path(start, target), current
+            return
+
+        for neigh in grid.get_neighbours(current):
+            if not neigh.walkable or neigh in closed_set:
+                continue
+
+            tentative_g = current.g_cost + get_distance(current, neigh)
+            if tentative_g < neigh.g_cost or neigh not in open_set:
+                neigh.g_cost = tentative_g
+                neigh.h_cost = get_distance(neigh, target)
+                neigh.parent = current
+                if neigh not in open_set:
+                    open_set.append(neigh)
+
+        yield [], current
+
 def initialize_pathfinding(grid,startNode) :
     openSet = []
     openSet.append(startNode)
