@@ -14,8 +14,12 @@ class ChessBoard:
         for i in range(self.size):
             for j in range(i+1, self.size):
                 if state[i] == state[j]:
+                    if state[i] == -1 or state[j] == -1:
+                        continue
                     conflicts += 1
                 elif abs(state[i] - state[j]) == abs(i - j):
+                    if state[i] == -1 or state[j] == -1:
+                        continue
                     conflicts += 1
         return conflicts
 
@@ -125,7 +129,51 @@ class GeneticSolver:
                 break
         return best
 
-# Example Usage:
+class CSPSolver:
+    def __init__(self, X=None, board=None):
+        self.board = board if board is not None else ChessBoard()
+        self.size = self.board.size
+        self.X = X if X is not None else [-1] * self.size
+        self.D = list(range(self.size))
+
+    def backtracking(self):
+        if -1 not in self.X and self.board.heuristic(self.X) == 0:
+            return self.X
+
+        var = self.select_variable()
+        for val in self.order_domain_values(var):
+            if self.is_consistent(val, var):
+                new_X = self.X.copy()
+                new_X[var] = val
+                result = CSPSolver(new_X, self.board).backtracking()
+                if result:
+                    return result
+        return None  # No solution
+
+    def select_variable(self):
+        # Select first unassigned column
+        return self.X.index(-1)
+
+    def order_domain_values(self, var):
+        return self.D
+        conflicts = {}
+        for row in self.D:
+            if row in self.X:
+                continue
+            temp_X = self.X.copy()
+            temp_X[var] = row
+            conflicts[row] = self.board.heuristic(temp_X)
+        return sorted(conflicts.keys(), key=lambda x: conflicts[x])
+
+    def is_consistent(self, val, var):
+      temp_X = self.X[:]
+      temp_X[var] = val
+      return self.board.heuristic(temp_X) == 0
+
+    def solve(self):
+        return self.backtracking()
+
+
 board = ChessBoard([3,2,1,4,3,2,1,2])
 print("Initial State Conflicts:", board.heuristic(board.initial_state))
 board.print_board(board.initial_state)
@@ -134,3 +182,20 @@ solver = GeneticSolver(population_size=100, mutation_rate=0.1, board=board)
 solution = solver.solve(max_generations=100,cross="pmx")
 print("Solution Conflicts:", board.heuristic(solution))
 board.print_board(solution)
+print(solution)
+
+
+# Initialize CSP solver
+#X=[3,-1,-1,5,-1,2,-1,-1],
+#X=[-1,-1,-1,-1,-1,-1,-1,-1],
+csp_board = ChessBoard()
+csp_solver = CSPSolver(board=csp_board)
+
+# Solve and print
+solution = csp_solver.solve()
+if solution:
+    print("CSP:")
+    print(solution)
+    csp_board.print_board(solution)
+else:
+    print("No solution found.")
