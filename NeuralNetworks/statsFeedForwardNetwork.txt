@@ -1,0 +1,82 @@
+With Bias
+Learnign Rate 0.1
+Iteration: 1
+Performance: 84.85% correct
+Number of wrong guesses: 1515
+Training completed in 69.00 seconds //added later
+
+Without Bias
+LearningRate0.1
+Iteration 1 
+Performance: 84.74% correct
+Number of wrong guesses: 1526
+
+
+With Bias
+Learnign Rate 0.2
+Iteration: 1
+Performance: 78.07% correct
+Number of wrong guesses: 2193
+
+With Bias
+Learnign Rate 0.5
+Iteration: 1
+Performance: 79.42% correct
+Number of wrong guesses: 2058
+
+With Bias
+Learnign Rate 0.05
+Iteration: 1
+Performance: 87.06% correct
+Number of wrong guesses: 1294
+
+//better performance and and time
+With Bias
+Learnign Rate 0.01
+Iteration: 1
+Training completed in 66.58 seconds
+Performance: 89.69% correct
+Number of wrong guesses: 1031
+
+With Bias
+Learnign Rate 0.01
+Iteration: 1
+Training completed in 63.42 seconds
+Performance: 85.41% correct
+
+Number of wrong guesses: 1459
+
+With Bias
+Learnign Rate 0.001
+Iteration: 1
+Training completed in 63.42 seconds
+Performance: 85.41% correct
+Number of wrong guesses: 1459
+
+With Bias
+Learnign Rate 0.005
+Iteration: 1
+Training completed in 62.07 seconds
+Performance: 89.27% correct
+Number of wrong guesses: 1073
+	
+//thats wierd it got much worse on more iterations most likley overfiiting
+With Bias
+Learnign Rate 0.1
+Iteration: 2
+Training completed in 140.41 seconds
+Performance: 80.80% correct
+Number of wrong guesses: 1920
+
+With Bias
+Learnign Rate 0.01
+Iteration: 2
+Training completed in 133.56 seconds
+Performance: 88.71% correct
+Number of wrong guesses: 1129
+
+conclusion 
+
+with bias
+best learning rare 0.1
+number of iterartion 1
