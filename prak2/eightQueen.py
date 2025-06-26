@@ -47,7 +47,7 @@ class GeneticSolver:
         population = []
         if selection == "inv_row":
             for _ in range(self.population_size):
-                individual = list(range(8))
+                individual = list(range(8)) 
                 random.shuffle(individual)
                 population.append(individual)
         else:
@@ -58,12 +58,12 @@ class GeneticSolver:
 
     def fitness(self, ind):
         return 28 - self.board.heuristic(ind)
-    #pmx_crossover is better for 8 queens but this was used in lecture and is easier to write ¯\_(ツ)_/¯
+    #pmx_crossover or diffrent is better for 8 queens but this was used in lecture and is easier to write ¯\_(ツ)_/¯
     def reproduce(self,x, y):
         n = len(x)
         c = random.randint(1, n-1)
         return x[:c] + y[c:]
-    #fine i wrote it (bit of help from chatgpt :))
+    #fine 
     def pmx_crossover(self, parent_a, parent_b):
      size = len(parent_a)
      cx1 = random.randint(0, size - 2)
@@ -138,7 +138,7 @@ class CSPSolver:
 
     def backtracking(self):
         if -1 not in self.X and self.board.heuristic(self.X) == 0:
-            return self.X
+            return self.X # return result
 
         var = self.select_variable()
         for val in self.order_domain_values(var):
@@ -148,10 +148,10 @@ class CSPSolver:
                 result = CSPSolver(new_X, self.board).backtracking()
                 if result:
                     return result
-        return None  # No solution
+        return None 
 
     def select_variable(self):
-        # Select first unassigned column
+        # Select first unassigned column 
         return self.X.index(-1)
 
     def order_domain_values(self, var):
@@ -178,6 +178,7 @@ board = ChessBoard([3,2,1,4,3,2,1,2])
 print("Initial State Conflicts:", board.heuristic(board.initial_state))
 board.print_board(board.initial_state)
 
+board = ChessBoard()
 solver = GeneticSolver(population_size=100, mutation_rate=0.1, board=board)
 solution = solver.solve(max_generations=100,cross="pmx")
 print("Solution Conflicts:", board.heuristic(solution))
@@ -189,7 +190,7 @@ print(solution)
 #X=[3,-1,-1,5,-1,2,-1,-1],
 #X=[-1,-1,-1,-1,-1,-1,-1,-1],
 csp_board = ChessBoard()
-csp_solver = CSPSolver(board=csp_board)
+csp_solver = CSPSolver([3,-1,-1,5,-1,2,-1,2],board=csp_board)
 
 # Solve and print
 solution = csp_solver.solve()
